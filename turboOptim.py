@@ -59,7 +59,7 @@ class turbo:
         plt.ylabel('Мощность, кВт', fontsize= 10) 
         plt.legend()
         plt.grid(linestyle='--', linewidth=0.5)
-        plt.savefig('turbo-optim.jpg', dpi = 300)
+        plt.savefig('turbo-optim.png', dpi = 300)
         plt.minorticks_on()
         # plt.title(self.name, fontsize= 10 , loc='left')
         plt.show()

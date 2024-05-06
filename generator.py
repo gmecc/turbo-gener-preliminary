@@ -50,16 +50,27 @@ class Gener:
         
         self.sol = root(self.func, 1000)
         self.n = self.sol.x[0] # Номинальная частота вращения, об/мин
-        
         return self.n
 
-    
+    def powerplot(self, n, u_max, k_ld=1.5):
+        n_min, n_max = n
+        ni = np.linspace(n_min, n_max, 50)
+        
+        for i in range(len(u_max)):
+            plt.plot(ni/1000, self.powergen(n=ni, u_max=u_max[i], k_ld=k_ld)/1000, 
+                     label=f'u_max={u_max[i]} м/с')
 
+        plt.xlabel('Частота вращения, об/мин *1000') 
+        plt.ylabel('Мощность, кВА') 
+        plt.grid(linestyle='--', linewidth=0.5, color='black') # сетка
+        plt.legend()
+        plt.savefig('generator-optim.png', dpi = 300)
+        plt.show()
 
+# ge = Gener()
+# ge.powerplot(n=(30000, 12000), u_max=(120, 150, 180), k_ld=1.5)
 
 # n = 12000
-
-# ge = gener()
 # print(f'{ge.arnold = :.0f}')
 
 # ge.powergen(n=n)
@@ -76,20 +87,5 @@ class Gener:
 
 
 
-# n = np.linspace(200, 1000, 50)
-# plt.plot(n*60/1000, Pn/1000, color='red')
-
-
-# print(n)
-# print(ge.powergen_fn(n=n, u_max=200, k_ld=2))
-
-    # def povergen(self, u_max, k_ld):
-    #     self.k_ld = k_ld
-    #     self.u_max = u_max
-    #     d_rot = np.linspace(self.d_min, self.d_max, 50)
-    #     n = u_max / (math.pi * d_rot) 
-    #     l = d_rot * k_ld
-    #     Pn = 2 * math.pi * d_rot ** 2 * l * n / (self.k_e * self.CA)
-    #     return n, Pn 
 
 
