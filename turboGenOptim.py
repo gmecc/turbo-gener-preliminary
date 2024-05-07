@@ -16,64 +16,44 @@ from scipy import constants as cst
 import math
 import matplotlib.pyplot as plt 
 
-df = pd.DataFrame({
+prop = pd.DataFrame({
     'mol': [28.965, 16.043, 0, 0],
     'k': [1.4017, 1.3053, 0, 0]},
     index=['air', 'methane', 'nitrogen', 'helium'],
     dtype=float)
 
-ds = pd.Series(index=[
-    'R', 
-    'k', 
-    'Cp',
-    'T_in',
-    'P_in',
-    'P_out',
-    'pit',
-    'h0',
-    'dh1s', 
-    'n_opt',
-    'efc',
-    'pwr',
-    'n',
-    'dh1',
-    'T_out',
-    'G',
-    'V2',
-    'Gv',
-    'mfp',
-    'Ns',
-    'efcp',
-    'efcs',
-    'n_optm',
-    ], dtype=float)
-
-pd.set_option('display.float_format', '{:.4f}'.format)
-
-class turbo:
-    def __init__(self, name, T_in, P_in, P_out):
-        self.name = name
+class TurboGenOptim:
+    def __init__(self, pit, T_in, fluid='air', P_out=cst.atm):
+        self.fluid = fluid
         self.T_in = T_in
-        self.P_in = P_in
-        self.P_out = P_out        
-        self.R = cst.R / df.mol[self.name] # удельная газовая постоянная (кДж/кг*К)
-        self.k = df.k[self.name] # показатель адиабаты
-        self.Cp = self.k / (self.k - 1) * self.R # удельная изобарная теплоемкость (кДж/кг*К)
-        self.pit = P_in / P_out
+        self.pit = pit
+        self.P_out = P_out 
+        
+        self.R = cst.R / prop.mol[self.fluid]*1000 # удельная газовая постоянная (Дж/кг*К)
+        self.k = prop.k[self.fluid] # показатель адиабаты
+        self.Cp = self.k / (self.k - 1) * self.R # удельная изобарная теплоемкость (Дж/кг*К)
         self.h0 = self.Cp * self.T_in
         self.dh1s = self.Cp * self.T_in * (1 - 1 / (self.pit**((self.k-1)/self.k))) 
-        ds.R = self.R
-        ds.k = self.k
-        ds.Cp = self.Cp
-        ds.P_in = self.P_in
-        ds.P_out = self.P_out
-        ds.pit = self.pit
-        ds.h0 = self.h0
-        ds.dh1s = self.dh1s
-        ds.T_in = self.T_in
-
-    def _solve(self, efc, pwr, n):
+        
+    def rotation_frequency_opt(self, pwr):
+        self.pwr = pwr 
+        self.efc = .87
+        self.dh1 = self.dh1s * self.efc
+        self.T_out = (self.h0 - self.dh1)/ self.Cp
+        self.G = self.pwr / self.dh1 
+        self.V2 = self.R * self.T_out / self.P_out 
+        self.Gv = self.G * self.V2 
+        self.n_opt = 0.548 * (self.dh1)**(3/4) / ( math.pi * (self.Gv**0.5))*60
+        return self.n_opt
+        
+        
+        
+    def specific_speed(self, pwr, n=1000, efc=.86):
         self.efc = efc
+        
+        
+
+    def _solve(self, pwr, n=1000, efc=.86):
         # self.pwr = pwr
         self.n = n
         self.dh1 = self.dh1s * efc
@@ -158,8 +138,13 @@ class gener:
 
 
 
-tu = turbo('air', T_in=300, P_in=12, P_out=6) # создание экземпляра класса turbo
-tu.powerplot()
+tu = TurboGenOptim(pit=3, T_in=950) # создание экземпляра класса turbo
+tu.rotation_frequency_opt(pwr=1e5)
+print(f'{tu.n_opt:.0f}')
+
+
+
+# tu.powerplot()
 
 
 
