@@ -156,8 +156,15 @@ class gener:
         Pn = 2 * math.pi * d_rot ** 2 * l * n / (self.k_e * self.CA)
         return n, Pn, d_rot        
 
+
+
+tu = turbo('air', T_in=300, P_in=12, P_out=6) # создание экземпляра класса turbo
+tu.powerplot()
+
+
+
+
 # tu = turbo('air', T_in=300, P_in=3.5, P_out=1) # создание экземпляра класса turbo
-# tu = turbo('air', T_in=300, P_in=12, P_out=6) # создание экземпляра класса turbo
 # tu.power(pwr=50) # оптимизация при n_opt
 # tu.powernset(pwr=50, ns=900) # оптимизация при заданной n
 # # print(ds)
@@ -166,7 +173,6 @@ class gener:
 # print('КПД оптимальный efcp', "%.3f"% ds.efcp)
 # print('Заданная частота вращения n', "%.0f"% ds.n)
 # print('Расчетный КПД efcs', "%.3f"% ds.efcs)
-# tu.powerplot()
 
 # ge = gener()
 # n, Pn, d_rot = ge.povergen(u_max=210, k_ld=1.75)
