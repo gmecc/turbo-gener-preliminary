@@ -95,68 +95,11 @@ class TurboGenOptim:
         plt.show()
 
 
-    # def generator(self, u_max, k_ld=1.5):
-    #     alpha_d = 0.64
-    #     k_f = 1.11
-    #     k_0 = 0.92
-    #     A = 3e4
-    #     B_delta = 0.45
-    #     self.k_e = 1.2
-    #     self.CA = 2 / (math.pi * alpha_d * k_f * k_0 * A * B_delta)
-        
-    #     self.k_ld = k_ld
-    #     self.u_max = u_max
-    #     d_rot = np.arange(0.04, 0.18, 0.01)
-    #     n = u_max / (math.pi * d_rot) 
-    #     l = d_rot * k_ld
-    #     Pn = 2 * math.pi * d_rot ** 2 * l * n / (self.k_e * self.CA)
-    #     return n, Pn, d_rot        
-
-        
-    
-
-
-
-
 tu = TurboGenOptim(pit=3, T_in=1250) # создание экземпляра класса turbo
-# tu.rotation_frequency_opt(pwr=1e5)
-# print(f'{tu.n_opt:.0f}')
-
 tu.turbogenerator(pwr=1e5)
 tu.plot(pwr=(20000, 200000))
 
 
 
-
-
-
-
-
-
-
-
-# tu.powerplot()
-
-
-
-
-# tu = turbo('air', T_in=300, P_in=3.5, P_out=1) # создание экземпляра класса turbo
-# tu.power(pwr=50) # оптимизация при n_opt
-# tu.powernset(pwr=50, ns=900) # оптимизация при заданной n
-# # print(ds)
-# print('Мощность pwr', "%.1f"% ds.pwr)
-# print('Оптимальная частота вращения n_optm', "%.0f"% ds.n_optm)
-# print('КПД оптимальный efcp', "%.3f"% ds.efcp)
-# print('Заданная частота вращения n', "%.0f"% ds.n)
-# print('Расчетный КПД efcs', "%.3f"% ds.efcs)
-
-# ge = gener()
-# n, Pn, d_rot = ge.povergen(u_max=210, k_ld=1.75)
-# plt.xlabel('n, krpm') 
-# plt.ylabel('Pn, kW') 
-# plt.plot(n*60/1000, Pn/1000, label='generator')
-# plt.legend()
-# # plt.grid()
-# plt.show()
 
 
