@@ -85,7 +85,7 @@ $$  P_n = \frac{2\pi n D^2 L}{k_e C_A}   $$
 ```python
 from turboGenOptim import TurboGenOptim
 
-tu = TurboGenOptim(pit=3, T_in=1250) # создание экземпляра класса turbo
+tu = TurboGenOptim(pit=3, T_in=1250) 
 tu.turbogenerator(pwr=1e5)
 tu.plot(pwr=(20000, 200000))
 
