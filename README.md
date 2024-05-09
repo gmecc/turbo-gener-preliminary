@@ -30,7 +30,7 @@ $$
 $$
 
 График зависимостей коэффициента скорости $\nu$ и КПД $\eta_e$ показан на рисунке.
-![balje.png](https://github.com/gmecc/balje.png)
+![balje.png](https://github.com/gmecc/turbo-gener-preliminary/blob/main/balje.png)
 
 Из графика видно, что максимальному значению КПД сосответствует значение коэффициента быстроходности
 
